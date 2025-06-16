@@ -1,4 +1,10 @@
 import "./globals.css";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Lokalna Restauracja',
+  description: 'Strona stworzona w celu nauki.',
+};
 
 export default function RootLayout({
   children,

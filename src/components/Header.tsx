@@ -1,26 +1,116 @@
-import Link from 'next/link'
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
+import { useState, useEffect } from "react";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaYoutube,
+  FaLinkedin,
+  FaTiktok,
+} from "react-icons/fa";
 
 export function Header() {
+  const [width, setWidth] = useState(0);
+  const breakpoint = 768;
+
+  
+  useEffect(() => {
+
+    setWidth(window.innerWidth);
+
+    window.addEventListener("resize", resizeHandler);
+
+    return () => {
+      window.removeEventListener("resize", resizeHandler);
+    };
+  }, []);
+
+  function resizeHandler() {
+    setWidth(window.innerWidth);
+  }
+
   return (
-    <div className="from-pink-50 to-white bg-gradient-to-b p-6">
-      <header className="bg-white/80 shadow-md flex items-center justify-between p-6 rounded-lg container mx-auto shadow-pink-50">
+    <header className="bg-white shadow-none flex items-center justify-between p-6 w-screen sticky top-0 z-2">
+      <div className="w-[33%]">
+        {" "}
         <Link
-          className="text-pink-700 md:text-xl font-bold tracking-tight"
+          className="text-red-500 md:text-2xl font-bold tracking-tight float-left"
+          href="/"
+        >
+          Menu
+        </Link>
+      </div>
+
+      <div className="w-[33%] flex items-center justify-center">
+        <Link
+          className="text-yellow-500 md:text-xl font-bold tracking-tight"
           href="/"
         >
           WcDonalds
         </Link>
-        <ul className="flex items-center gap-4 font-semibold text-slate-700">
-          <li>
-            <Link
-              className="hover:text-pink-500 transition-colors"
-              href="/posts"
-            >
-              Posts
-            </Link>
-          </li>
-        </ul>
-      </header>
-    </div>
-  )
+      </div>
+      <div className="w-[33%]">
+        {width > breakpoint ? (
+          <ul className="float-right inline-flex items-center gap-4 font-semibold text-black ">
+            <li>
+              <Link
+                href="https://www.facebook.com/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <FaFacebook className="size-4"></FaFacebook>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="https://www.instagram.com/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <FaInstagram className="size-4"></FaInstagram>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="https://www.youtube.com/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <FaYoutube className="size-4"></FaYoutube>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="https://linkedin.com/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <FaLinkedin className="size-4"></FaLinkedin>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="https://www.tiktok.com/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <FaTiktok className="size-4"></FaTiktok>
+              </Link>
+            </li>
+
+            <li>
+              <button
+                className="border-none bg-amber-400 rounded-2xl px-7 py-1 font-bold uppercase text-sm"
+                onClick={() => window.alert("Brak implementacji")}
+              >
+                Zamów
+              </button>
+            </li>
+          </ul>
+        ) : <button onClick={() => window.alert("Brak implementacji")} className="float-right"><Image src="/globe.svg" alt="Dostawa" width={50} height={50} /></button> }
+      </div>
+    </header>
+  );
 }
