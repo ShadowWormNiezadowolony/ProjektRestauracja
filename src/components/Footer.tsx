@@ -7,7 +7,7 @@ import {Social} from "@/components/Social"
 export function Footer() {
 
   const [width, setWidth] = useState(0);
-    const breakpointFooter = 1200;
+    const breakpointFooter: number = 1280;
   
     useEffect(() => {
       setWidth(window.innerWidth);
@@ -26,20 +26,20 @@ export function Footer() {
 
   return (
     <footer className="bg-white text-black p-10 pb-0">
-      <div className="w-full flex items-center justify-between flex-wrap">
-        <Link href={"/"}>
+      <div className="container flex items-center justify-between flex-wrap flex-col xl:flex-row ">
+          <Link href={"/"}>
           <Image
             className="hover:opacity-50"
-            src="/logo.svg"
+            src="/logo2.svg"
             alt="logo"
             width={100}
             height={100}
           ></Image>
         </Link>
 
-        {width < breakpointFooter ? (<Social/>) : null}
+        {width < breakpointFooter ? (<div className="container"><Social/></div>) : null}
 
-        {width > breakpointFooter ? (<ul className="uppercase grid grid-cols-2 grid-rows-4 gap-2.5 font-bold text-black">
+        {width > breakpointFooter ? (<ul className="uppercase grid grid-cols-2 grid-rows-4 gap-3 font-bold text-black">
           <li>
             <Link href="/">Nasze Menu</Link>
           </li>
@@ -63,7 +63,7 @@ export function Footer() {
           </li>
         </ul>):null}
 
-        <ul className="text-black grid grid-cols-2 grid-rows-3 gap-1.5">
+        <ul className="text-black grid grid-cols-1 md:grid-cols-5 md:grid-rows-2 xl:grid-cols-2 xl:grid-rows-3 gap-3">
           <li>
             <Link href="/">Regulaminy</Link>
           </li>
@@ -84,17 +84,17 @@ export function Footer() {
           </li>
         </ul>
 
-        {width > breakpointFooter ? (<Social/>) : null}
+        {width >= breakpointFooter ? (<Social/>) : null}
       </div>
 
-      <div className="w-full text-center m-1">
+      <div className="w-full text-center m-1 font-bold">
         <p>
           &copy; {new Date().getFullYear()} prawa autorskie należą do McDonald’s
           Corporation.
         </p>
       </div>
-
-      <div className="w-full text-center m-1">
+          <hr />
+      <div className="w-full text-center m-1 font-bold">
         <p>
           Strona utworzona w celach nauki programowania na podstawie strony menu
           mcdonalda

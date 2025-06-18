@@ -1,27 +1,26 @@
 import { DocumentTextIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
-export const postType = defineType({
-  name: "post",
-  title: "Post",
+export const productType = defineType({
+  name: "product",
+  title: "Product",
   type: "document",
   icon: DocumentTextIcon,
   fields: [
     defineField({
-      name: "title",
+      name: "name",
       type: "string",
     }),
     defineField({
       name: "slug",
       type: "slug",
       options: {
-        source: "title",
+        source: "name",
       },
     }),
     defineField({
-      name: "author",
-      type: "reference",
-      to: { type: "author" },
+      name: "subtitle",
+      type: "string",
     }),
     defineField({
       name: "mainImage",
@@ -39,7 +38,7 @@ export const postType = defineType({
               const parent = context?.parent as { asset?: { _ref?: string } };
 
               return !value && parent?.asset?._ref
-                ? "Potrzeba obrazka z alternatywnym tekstem"
+                ? "Dodaj tekst alternatywny"
                 : true;
             }),
         }),
@@ -51,23 +50,29 @@ export const postType = defineType({
       of: [defineArrayMember({ type: "reference", to: { type: "category" } })],
     }),
     defineField({
+      name: "price",
+      type: "number",
+      validation: (rule) => rule.min(0),
+    }),
+    defineField({
+      name: "calories",
+      type: "number",
+      validation: (rule) => rule.min(0),
+    }),
+    defineField({
       name: "publishedAt",
       type: "datetime",
     }),
     defineField({
-      name: "body",
-      type: "blockContent",
+      name: "description",
+      type: "text",
+      validation: (rule) => rule.max(400).warning("Za długi opis!"),
     }),
   ],
   preview: {
     select: {
-      title: "title",
-      author: "author.name",
+      title: "name",
       media: "mainImage",
-    },
-    prepare(selection) {
-      const { author } = selection;
-      return { ...selection, subtitle: author && `by ${author}` };
     },
   },
 });

@@ -13,7 +13,7 @@ import {
 
 export function Header() {
   const [width, setWidth] = useState(0);
-  const breakpoint = 768;
+  const breakpoint: number = 768;
 
   useEffect(() => {
     setWidth(window.innerWidth);
@@ -44,7 +44,7 @@ export function Header() {
               WcDonalds
             </p>
           ) : (
-            <Image className="hover:opacity-50" src="/logo2.svg" alt="Logo" width={75} height={75} />
+            <Image className="hover:opacity-50" src="/logo2.svg" alt="Logo" width={50} height={50} />
           )}
         </Link>
       </div>
