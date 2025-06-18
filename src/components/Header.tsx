@@ -15,9 +15,7 @@ export function Header() {
   const [width, setWidth] = useState(0);
   const breakpoint = 768;
 
-  
   useEffect(() => {
-
     setWidth(window.innerWidth);
 
     window.addEventListener("resize", resizeHandler);
@@ -32,28 +30,27 @@ export function Header() {
   }
 
   return (
-    <header className="bg-white shadow-none flex items-center justify-between p-6 w-screen sticky top-0 z-2">
+    <header className="bg-white dark:bg-gray-700 shadow-none flex items-center justify-between p-6 w-screen sticky top-0 z-2">
       <div className="w-[33%]">
-        {" "}
-        <Link
-          className="text-red-500 md:text-2xl font-bold tracking-tight float-left"
-          href="/"
-        >
-          Menu
+        <Link className="float-left" href="/">
+          <Image className="hover:opacity-50" src="/menu.svg" alt="ikona menu" width={50} height={50} />
         </Link>
       </div>
 
       <div className="w-[33%] flex items-center justify-center">
-        <Link
-          className="text-yellow-500 md:text-xl font-bold tracking-tight"
-          href="/"
-        >
-          WcDonalds
+        <Link href="/">
+          {width > breakpoint ? (
+            <p className="text-yellow-500 md:text-xl font-bold tracking-tight">
+              WcDonalds
+            </p>
+          ) : (
+            <Image className="hover:opacity-50" src="/logo2.svg" alt="Logo" width={75} height={75} />
+          )}
         </Link>
       </div>
       <div className="w-[33%]">
         {width > breakpoint ? (
-          <ul className="float-right inline-flex items-center gap-4 font-semibold text-black ">
+          <ul className="float-right inline-flex items-center gap-4 font-semibold text-black">
             <li>
               <Link
                 href="https://www.facebook.com/"
@@ -102,14 +99,21 @@ export function Header() {
 
             <li>
               <button
-                className="border-none bg-amber-400 rounded-2xl px-7 py-1 font-bold uppercase text-sm"
+                className="border-none cursor-pointer bg-amber-400 rounded-2xl px-7 py-1 font-bold uppercase text-sm"
                 onClick={() => window.alert("Brak implementacji")}
               >
                 Zamów
               </button>
             </li>
           </ul>
-        ) : <button onClick={() => window.alert("Brak implementacji")} className="float-right"><Image src="/globe.svg" alt="Dostawa" width={50} height={50} /></button> }
+        ) : (
+          <button
+            onClick={() => window.alert("Brak implementacji")}
+            className="float-right cursor-pointer"
+          >
+            <Image className="hover:opacity-50" src="/dostawa.svg" alt="Dostawa" width={50} height={50} />
+          </button>
+        )}
       </div>
     </header>
   );
