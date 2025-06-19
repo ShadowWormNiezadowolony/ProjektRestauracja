@@ -44,7 +44,7 @@ export function Header() {
               WcDonalds
             </p>
           ) : (
-            <Image className="hover:opacity-50" src="/logo2.svg" alt="Logo" width={50} height={50} />
+            <Image className="hover:opacity-50" src="/icon.svg" alt="Logo" width={50} height={50} />
           )}
         </Link>
       </div>

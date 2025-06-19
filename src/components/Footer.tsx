@@ -30,7 +30,7 @@ export function Footer() {
           <Link href={"/"}>
           <Image
             className="hover:opacity-50"
-            src="/logo2.svg"
+            src="/icon.svg"
             alt="logo"
             width={100}
             height={100}
