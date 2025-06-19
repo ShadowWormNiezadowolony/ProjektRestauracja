@@ -212,18 +212,54 @@ export type SanityAssetSourceData = {
 export type AllSanitySchemaTypes = Product | Category | BlockContent | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
-// Variable: POSTS_QUERY
-// Query: *[_type == "post" && defined(slug.current)][0...12]{  _id, title, slug}
-export type POSTS_QUERYResult = Array<never>;
-// Variable: POST_QUERY
-// Query: *[_type == "post" && slug.current == $slug][0]{  title, body, mainImage}
-export type POST_QUERYResult = null;
+// Variable: CATEGORY_QUERY
+// Query: *[_type == "product" && $category in categories[]->slug.current][]{  name,  slug,  mainImage,  "categoriesSlugs": categories[]->slug.current}
+export type CATEGORY_QUERYResult = Array<{
+  name: string | null;
+  slug: Slug | null;
+  mainImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  categoriesSlugs: Array<string | null> | null;
+}>;
+// Variable: PRODUCT_QUERY
+// Query: *[_type == "product" && slug.current == $slug][0]{  name,  subtitle,  mainImage,  calories,  price,  description}
+export type PRODUCT_QUERYResult = {
+  name: string | null;
+  subtitle: string | null;
+  mainImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  calories: number | null;
+  price: number | null;
+  description: string | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"post\" && defined(slug.current)][0...12]{\n  _id, title, slug\n}": POSTS_QUERYResult;
-    "*[_type == \"post\" && slug.current == $slug][0]{\n  title, body, mainImage\n}": POST_QUERYResult;
+    "*[_type == \"product\" && $category in categories[]->slug.current][]{\n  name,\n  slug,\n  mainImage,\n  \"categoriesSlugs\": categories[]->slug.current\n}": CATEGORY_QUERYResult;
+    "*[_type == \"product\" && slug.current == $slug][0]{\n  name,\n  subtitle,\n  mainImage,\n  calories,\n  price,\n  description\n}\n": PRODUCT_QUERYResult;
   }
 }

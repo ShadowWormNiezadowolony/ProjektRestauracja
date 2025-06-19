@@ -1,11 +1,22 @@
 import { defineQuery } from "next-sanity";
 
-export const POSTS_QUERY =
-  defineQuery(`*[_type == "post" && defined(slug.current)][0...12]{
-  _id, title, slug
+//Dla każdej kateogrii po przesłanym slugu kategorii (mainImage,slug,name,kategorie)
+export const CATEGORY_QUERY =
+  defineQuery(`*[_type == "product" && $category in categories[]->slug.current][]{
+  name,
+  slug,
+  mainImage,
+  "categoriesSlugs": categories[]->slug.current
 }`);
 
-export const POST_QUERY =
-  defineQuery(`*[_type == "post" && slug.current == $slug][0]{
-  title, body, mainImage
-}`);
+//Dla pojedyńczego produktu po slugu (Potrzebne do wyświetlenia pojedynczego produktu)
+export const PRODUCT_QUERY =
+  defineQuery(`*[_type == "product" && slug.current == $slug][0]{
+  name,
+  subtitle,
+  mainImage,
+  calories,
+  price,
+  description
+}
+`);
