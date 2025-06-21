@@ -30,7 +30,7 @@ export function Header() {
   }
 
   return (
-    <header className="bg-white dark:bg-gray-700 shadow-none flex items-center justify-between p-6 w-screen sticky top-0 z-2">
+    <header className="bg-white dark:bg-gray-700 flex items-center justify-between p-6 w-screen sticky top-0 z-2 shadow-lg">
       <div className="w-[33%]">
         <Link className="float-left" href="/">
           <Image className="hover:opacity-50" src="/menu.svg" alt="ikona menu" width={50} height={50} />

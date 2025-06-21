@@ -5,13 +5,13 @@ import { CATEGORY_QUERY } from "@/sanity/lib/queries";
 import { sanityFetch } from "@/sanity/lib/live";
 
 export default async function Page() {
-  const { data: products } = await sanityFetch({ query: CATEGORY_QUERY });
+  const { data: Products } = await sanityFetch({ query: CATEGORY_QUERY });
 
   return (
-    <>
+    <main>
       <Baner />
       <NavBar />
-      <Menu dane={products} />
-    </>
+      <Menu dane={Products.products} kategorie={Products.categories} />
+    </main>
   );
 }

@@ -262,6 +262,13 @@
           "type": "string"
         },
         "optional": true
+      },
+      "priority": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "number"
+        },
+        "optional": true
       }
     }
   },

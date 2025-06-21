@@ -57,6 +57,7 @@ export type Category = {
   name?: string;
   slug?: Slug;
   description?: string;
+  priority?: number;
 };
 
 export type BlockContent = Array<{
@@ -213,86 +214,83 @@ export type AllSanitySchemaTypes = Product | Category | BlockContent | SanityIma
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: CATEGORY_QUERY
-// Query: *[_type == "product"][]{  _id,  name,  slug,  mainImage{  ...,    asset->  },  "categoriesSlugs": categories[]->slug.current}
-export type CATEGORY_QUERYResult = Array<{
-  _id: string;
-  name: string | null;
-  slug: Slug | null;
-  mainImage: {
-    asset: {
-      _id: string;
-      _type: "sanity.imageAsset";
-      _createdAt: string;
-      _updatedAt: string;
-      _rev: string;
-      originalFilename?: string;
-      label?: string;
-      title?: string;
-      description?: string;
-      altText?: string;
-      sha1hash?: string;
-      extension?: string;
-      mimeType?: string;
-      size?: number;
-      assetId?: string;
-      uploadId?: string;
-      path?: string;
-      url?: string;
-      metadata?: SanityImageMetadata;
-      source?: SanityAssetSourceData;
+// Query: {"products": *[_type == "product"][]{    _id,    name,    slug,    mainImage,    "categoriesSlugs": categories[]->slug.current  },  "categories": *[_type == "category"][]{    _id,    name,    slug,    priority,  } | order(priority asc)}
+export type CATEGORY_QUERYResult = {
+  products: Array<{
+    _id: string;
+    name: string | null;
+    slug: Slug | null;
+    mainImage: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
     } | null;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-  } | null;
-  categoriesSlugs: Array<string | null> | null;
-}>;
+    categoriesSlugs: Array<string | null> | null;
+  }>;
+  categories: Array<{
+    _id: string;
+    name: string | null;
+    slug: Slug | null;
+    priority: number | null;
+  }>;
+};
 // Variable: PRODUCT_QUERY
-// Query: *[_type == "product" && slug.current == $slug][0]{  name,  subtitle,  mainImage{  ...,    asset->  },  calories,  price,  description}
+// Query: {"product":*[_type == "product" && slug.current == $slug][0]{  name,  subtitle,  mainImage,  calories,  price,  description},"OtherProducts":*[_type == "product" && $category in categories[]->slug.current && slug.current != $slug][]{  _id,    name,    slug,    mainImage,    "categoriesSlugs": categories[]->slug.current}}
 export type PRODUCT_QUERYResult = {
-  name: string | null;
-  subtitle: string | null;
-  mainImage: {
-    asset: {
-      _id: string;
-      _type: "sanity.imageAsset";
-      _createdAt: string;
-      _updatedAt: string;
-      _rev: string;
-      originalFilename?: string;
-      label?: string;
-      title?: string;
-      description?: string;
-      altText?: string;
-      sha1hash?: string;
-      extension?: string;
-      mimeType?: string;
-      size?: number;
-      assetId?: string;
-      uploadId?: string;
-      path?: string;
-      url?: string;
-      metadata?: SanityImageMetadata;
-      source?: SanityAssetSourceData;
+  product: {
+    name: string | null;
+    subtitle: string | null;
+    mainImage: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
     } | null;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
+    calories: number | null;
+    price: number | null;
+    description: string | null;
   } | null;
-  calories: number | null;
-  price: number | null;
-  description: string | null;
-} | null;
+  OtherProducts: Array<{
+    _id: string;
+    name: string | null;
+    slug: Slug | null;
+    mainImage: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+    categoriesSlugs: Array<string | null> | null;
+  }>;
+};
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"product\"][]{\n  _id,\n  name,\n  slug,\n  mainImage{\n  ...,\n    asset->\n  },\n  \"categoriesSlugs\": categories[]->slug.current\n}": CATEGORY_QUERYResult;
-    "*[_type == \"product\" && slug.current == $slug][0]{\n  name,\n  subtitle,\n  mainImage{\n  ...,\n    asset->\n  },\n  calories,\n  price,\n  description\n}\n": PRODUCT_QUERYResult;
+    "{\"products\": *[_type == \"product\"][]{\n    _id,\n    name,\n    slug,\n    mainImage,\n    \"categoriesSlugs\": categories[]->slug.current\n  },\n  \"categories\": *[_type == \"category\"][]{\n    _id,\n    name,\n    slug,\n    priority,\n  } | order(priority asc)\n}": CATEGORY_QUERYResult;
+    "{\"product\":*[_type == \"product\" && slug.current == $slug][0]{\n  name,\n  subtitle,\n  mainImage,\n  calories,\n  price,\n  description\n},\n\"OtherProducts\":*[_type == \"product\" && $category in categories[]->slug.current && slug.current != $slug][]{\n  _id,\n    name,\n    slug,\n    mainImage,\n    \"categoriesSlugs\": categories[]->slug.current\n}\n}": PRODUCT_QUERYResult;
   }
 }

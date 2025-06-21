@@ -1,11 +1,9 @@
 import {MenuSection} from "@/components/MenuSection";
 
-export function Menu({dane}:{dane: any}) {
-
-    const menuCategoriesSlugs: string[] = ["nowosc", "burgery", "kurczak" , "salatki" ,"napoje", "dodatki-frytki" ,"desery-lody"];
+export function Menu({dane, kategorie}:{dane: any, kategorie: any}) {
     return (
-      <main>
-          {menuCategoriesSlugs.map((slug: string, index: number) => (<MenuSection key={index} items={dane} category={slug} />))}
-      </main>
+      <div>
+          {kategorie.map((kategoria: any) => (<MenuSection key={kategoria._id} items={dane} categorySlug={kategoria.slug.current} categoryName={kategoria.name} />))}
+      </div>
   )
 }
