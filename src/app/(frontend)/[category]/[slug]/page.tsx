@@ -5,6 +5,7 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { MenuItem } from "@/components/MenuItem";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
+import { SanityAsset } from "@sanity/image-url/lib/types/types";
 
 export default async function Page({
   params,
@@ -89,7 +90,7 @@ export default async function Page({
       <section>
         <h2 className="font-bold pl-5 md:pl-20 py-8 text-4xl">Inne Produkty</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 2xl:grid-cols-6">
-          {Product.OtherProducts.map((item: any) => (
+          {Product.OtherProducts.map((item: SanityAsset) => (
             <MenuItem key={item._id} Item={item} Category={category} />
           ))}
         </div>

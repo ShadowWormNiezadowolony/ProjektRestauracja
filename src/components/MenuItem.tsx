@@ -1,8 +1,9 @@
 import { urlFor } from "@/sanity/lib/image";
+import { SanityAsset } from "@sanity/image-url/lib/types/types";
 import Image from "next/image";
 import Link from "next/link";
 
-export function MenuItem({ Item, Category }: { Item: any; Category: string }) {
+export function MenuItem({ Item, Category }: { Item: SanityAsset; Category: string }) {
   //Obrazy powinny być w 850x800px
   return (
     <div className="w-full group m-[1px] border-[1px] border-gray-100 shadow-sm/10">

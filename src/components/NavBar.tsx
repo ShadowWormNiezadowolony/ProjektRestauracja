@@ -1,9 +1,11 @@
 "use client";
 
-export function NavBar({ kategorie }: { kategorie: any }) {
+import { SanityAsset } from "@sanity/image-url/lib/types/types";
+
+export function NavBar({ kategorie }: { kategorie: SanityAsset }) {
   return (
     <nav className="overflow-auto p-3 w-full rounded-b-3xl border-none bg-white flex items-center fixed z-2 shadow-lg select-none">
-      {kategorie.map((Item: any) => (
+      {kategorie.map((Item: SanityAsset) => (
         <button
         onClick={()=>{
           document.querySelector("#"+Item.slug.current)?.scrollIntoView({behavior:"smooth", block:"start"});
