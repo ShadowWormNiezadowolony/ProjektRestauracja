@@ -2,7 +2,7 @@
 
 export function NavBar({ kategorie }: { kategorie: any }) {
   return (
-    <nav className="overflow-auto p-4 w-full rounded-b-3xl border-none bg-white flex items-center fixed z-2 shadow-lg select-none">
+    <nav className="overflow-auto p-3 w-full rounded-b-3xl border-none bg-white flex items-center fixed z-2 shadow-lg select-none">
       {kategorie.map((Item: any) => (
         <button
         onClick={()=>{

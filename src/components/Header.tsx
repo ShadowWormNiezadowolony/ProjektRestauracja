@@ -13,15 +13,19 @@ import {
 
 export function Header() {
   const [width, setWidth] = useState(0);
+  const [shadowState, setShadowState] = useState(0);
   const breakpoint: number = 768;
 
   useEffect(() => {
     setWidth(window.innerWidth);
+    setShadowState(window.scrollY);
 
     window.addEventListener("resize", resizeHandler);
+    window.addEventListener("scroll",scrollHandler)
 
     return () => {
       window.removeEventListener("resize", resizeHandler);
+      window.removeEventListener("scroll",scrollHandler);
     };
   }, []);
 
@@ -29,8 +33,12 @@ export function Header() {
     setWidth(window.innerWidth);
   }
 
+  function scrollHandler() {
+    setShadowState(window.scrollY);
+  }
+
   return (
-    <header className="bg-white dark:bg-gray-700 flex items-center justify-between p-3 md:p-6 w-screen sticky top-0 z-2 shadow-lg">
+    <header className={`bg-white dark:bg-gray-700 flex items-center justify-between p-3 md:p-6 w-screen sticky top-0 z-2 ${shadowState ? "shadow-lg" : "shadow-none"} transition-shadow duration-200`}>
       <div className="w-[33%]">
         <Link className="float-left" href="/">
           <Image

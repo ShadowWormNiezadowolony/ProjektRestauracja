@@ -42,16 +42,16 @@ export default async function Page({
             src={
               Product.product?.mainImage
                 ? urlFor(Product.product.mainImage)
-                    .height(750)
-                    .width(750)
+                    .height(650)
+                    .width(650)
                     .quality(80)
                     .auto("format")
                     .url()
                 : "/placeholder.png"
             }
             alt={Product.product?.mainImage?.alt || "obraz"}
-            height={600}
-            width={550}
+            height={650}
+            width={650}
           />
         </div>
       </div>

@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   icons: {
     icon: '/light_mode.svg',
   },
+  robots : "noindex",
 };
 
 export default function RootLayout({
