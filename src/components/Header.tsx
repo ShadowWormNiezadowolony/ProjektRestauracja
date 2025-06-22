@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import {
   FaFacebook,
   FaInstagram,
@@ -30,10 +30,16 @@ export function Header() {
   }
 
   return (
-    <header className="bg-white dark:bg-gray-700 flex items-center justify-between p-6 w-screen sticky top-0 z-2 shadow-lg">
+    <header className="bg-white dark:bg-gray-700 flex items-center justify-between p-3 md:p-6 w-screen sticky top-0 z-2 shadow-lg">
       <div className="w-[33%]">
         <Link className="float-left" href="/">
-          <Image className="hover:opacity-50" src="/menu.svg" alt="ikona menu" width={50} height={50} />
+          <Image
+            className="hover:opacity-50"
+            src="/menu.svg"
+            alt="ikona menu"
+            width={50}
+            height={50}
+          />
         </Link>
       </div>
 
@@ -44,7 +50,13 @@ export function Header() {
               WcDonalds
             </p>
           ) : (
-            <Image className="hover:opacity-50" src="/icon.svg" alt="Logo" width={50} height={50} />
+            <Image
+              className="hover:opacity-50"
+              src="/icon.svg"
+              alt="Logo"
+              width={50}
+              height={50}
+            />
           )}
         </Link>
       </div>
@@ -111,7 +123,13 @@ export function Header() {
             onClick={() => window.alert("Brak implementacji")}
             className="float-right cursor-pointer"
           >
-            <Image className="hover:opacity-50" src="/dostawa.svg" alt="Dostawa" width={50} height={50} />
+            <Image
+              className="hover:opacity-50"
+              src="/dostawa.svg"
+              alt="Dostawa"
+              width={50}
+              height={50}
+            />
           </button>
         )}
       </div>

@@ -8,10 +8,12 @@ export default async function Page() {
   const { data: Products } = await sanityFetch({ query: CATEGORY_QUERY });
 
   return (
+    <>
+    <NavBar kategorie={Products.categories} />
     <main>
       <Baner />
-      <NavBar />
       <Menu dane={Products.products} kategorie={Products.categories} />
     </main>
+    </>
   );
 }
