@@ -1,44 +1,52 @@
 "use client";
 
 import { SanityAsset } from "@sanity/image-url/lib/types/types";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 export function NavBar({ Kategorie }: { Kategorie: SanityAsset }) {
   const [scrollState, setScrollState] = useState(false);
   const [headerOffset, setHeaderOffset] = useState(0);
+  const [banerOffset, setBanerOffset] = useState(0);
+  const [offset, setOffset] = useState(0);
   const navbarRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    setHeaderOffset(document.querySelector("header")?.offsetHeight ?? 0);
-    let banerOffset: number =
-      document.querySelector("#baner")?.scrollHeight ?? 0;
-    let offset: number = (headerOffset + banerOffset) / 2;
-
-    function scrollHandler() : void {
-      const currentScroll = window.scrollY;
-      if (currentScroll > offset) {
-        setScrollState(true);
-      } else {
-        setScrollState(false);
-      }
-    }
-
-    function offsetHandler() : void {
+    function Offsets(): void {
       setHeaderOffset(document.querySelector("header")?.offsetHeight ?? 0);
-      banerOffset = document.querySelector("#baner")?.scrollHeight ?? 0;
-      offset = (headerOffset + banerOffset) / 2;
+      setBanerOffset(document.querySelector("#baner")?.scrollHeight ?? 0);
     }
 
+    Offsets();
+
+    window.addEventListener("resize", Offsets);
+
+    return () => {
+      window.removeEventListener("resize", Offsets);
+    };
+  }, []);
+
+  useEffect(() => {
+    setOffset((headerOffset + banerOffset) / 2);
+  }, [headerOffset, banerOffset]);
+
+  const scrollHandler = useCallback(() => {
+    const currentScroll = window.scrollY;
+    if (currentScroll > offset) {
+      setScrollState(true);
+    } else {
+      setScrollState(false);
+    }
+  }, [offset]);
+
+  useEffect(() => {
     window.addEventListener("scroll", scrollHandler);
-    window.addEventListener("resize", offsetHandler);
 
     scrollHandler();
 
     return () => {
       window.removeEventListener("scroll", scrollHandler);
-      window.removeEventListener("resize", offsetHandler);
     };
-  }, []);
+  }, [scrollHandler]);
 
   useEffect(() => {
     const navbar = navbarRef.current;

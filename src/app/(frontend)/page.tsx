@@ -1,6 +1,5 @@
 import { Baner } from "@/components/Baner";
 import { Menu } from "@/components/Menu";
-import { NavBar } from "@/components/NavBar";
 import { CATEGORY_QUERY } from "@/sanity/lib/queries";
 import { sanityFetch } from "@/sanity/lib/live";
 
