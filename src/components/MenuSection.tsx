@@ -11,7 +11,7 @@ export function MenuSection({
   categoryName: string;
 }) {
   const filteredItems: SanityAsset = items.filter((item: SanityAsset) =>
-    item.categoriesSlugs.includes(categorySlug)
+    item?.categoriesSlugs?.includes(categorySlug)
   );
 
   return (
@@ -19,7 +19,7 @@ export function MenuSection({
       <h2 className="font-bold  pl-5 md:pl-20 py-8 text-4xl">{categoryName}</h2>
       <div className="grid grid-cols-2 md:grid-cols-4 2xl:grid-cols-6">
         {filteredItems.map((item: SanityAsset) => (
-          <MenuItem key={item._id} Item={item} Category={categorySlug} />
+          <MenuItem key={item?._id} Item={item} Category={categorySlug} />
         ))}
       </div>
     </section>

@@ -26,7 +26,7 @@ export function NavBar({ Kategorie }: { Kategorie: SanityAsset }) {
   }, []);
 
   useEffect(() => {
-    setOffset((headerOffset + banerOffset) / 2);
+    setOffset((headerOffset + banerOffset) * 0.4);
   }, [headerOffset, banerOffset]);
 
   const scrollHandler = useCallback(() => {
@@ -66,13 +66,13 @@ export function NavBar({ Kategorie }: { Kategorie: SanityAsset }) {
         <button
           onClick={() => {
             document
-              .querySelector("#" + Item.slug.current)
+              .querySelector("#" + Item?.slug?.current)
               ?.scrollIntoView({ behavior: "smooth", block: "start" });
           }}
           className="bg-yellow-500 active:bg-amber-400 active:opacity-100 font-bold mx-1 py-2 px-4 hover:opacity-50 rounded-4xl"
-          key={Item.priority}
+          key={Item?.priority}
         >
-          {Item.name}
+          {Item?.name || "brak danych"}
         </button>
       ))}
     </nav>
