@@ -6,7 +6,7 @@ import Link from "next/link";
 export function MenuItem({ Item, Category }: { Item: SanityAsset; Category: string }) {
   //Obrazy powinny być w 850x800px
   return (
-    <div className="w-full group m-[1px] border-[1px] border-gray-100 shadow-sm/10 overflow-hidden">
+    <div className="w-full group m-[1px] border-[1px] border-gray-100 shadow-sm/10 overflow-hidden hover:bg-yellow-500">
       <Link href={"/"+ Category + "/" + Item?.slug?.current}>
         <div className="w-full overflow-hidden bg-[url(/bg_1.png)] bg-center bg-cover bg-no-repeat">
           <Image
@@ -22,7 +22,7 @@ export function MenuItem({ Item, Category }: { Item: SanityAsset; Category: stri
             width={800}
           />
         </div>
-        <div className="text-center h-full p-5 group-hover:bg-yellow-500">
+        <div className="text-center p-5">
           <p className="font-bold">
             {Item?.categoriesSlugs?.includes("nowosc") ? (
               <span className="bg-yellow-500 group-hover:bg-white p-[2px]">
